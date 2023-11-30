@@ -1,92 +1,65 @@
-# Определение класса Bank
-class Bank:
-    def __init__(self, name):
+class Collection:#создание класса коллекция
+    def __init__(self, name, owner):#инициализация полей
         self.name = name
-
-    def get_name(self):
-        return self.name
-
-    def set_name(self, new_name):
-        self.name = new_name
-
-# Определение класса Filial (филиал)
-class Filial:
-    def __init__(self, name, total_deposits):
+        self.owner = owner
+class MusicAlbum:#создание класса музыкальный альбом
+    def __init__(self, author, genre, year, duration):#инициализация полей
+        self.author = author
+        self.genre = genre
+        self.year = year
+        self.duration = duration
+class MusicPiece:#создание класса музыкальное произведение
+    def __init__(self, name, duration):#инициализация полей
         self.name = name
-        self.total_deposits = total_deposits
-
-    def get_name(self):
-        return self.name
-
-    def set_name(self, new_name):
-        self.name = new_name
-
-    def get_total_deposits(self):
-        return self.total_deposits
-
-    def set_total_deposits(self, new_total_deposits):
-        self.total_deposits = new_total_deposits
-
-# Определение класса Deposit (вклад)
-class Deposit:
-    def __init__(self, client_name, deposit_amount):
-        self.client_name = client_name
-        self.deposit_amount = deposit_amount
-
-    def get_client_name(self):
-        return self.client_name
-
-    def set_client_name(self, new_client_name):
-        self.client_name = new_client_name
-
-    def get_deposit_amount(self):
-        return self.deposit_amount
-
-    def set_deposit_amount(self, new_deposit_amount):
-        self.deposit_amount = new_deposit_amount
-
-    def calculate_deposit(self, months):
+        self.duration = duration
+    def info(self):#метод по выводу информации
         try:
-            if months < 0:
-                raise ValueError("Количество месяцев не может быть отрицательным")
+            if self.duration <= 0:#оповещает об ошибке если продолжительность <=0 то выдаёт ошибку значения
+                raise ValueError('длительность не может быть <= 0')
             else:
-                return self.deposit_amount * months
+                print(f'Название: {self.name}\n'
+                      f'Продолжительность: {self.duration} минут')
         except ValueError as e:
-            print("Ошибка:", str(e))
-
-# Определение класса LongTermDeposit (долгосрочный вклад), унаследованного от Deposit
-class LongTermDeposit(Deposit):
-    def calculate_deposit(self, months):
+            print('Error:', str(e))
+class Song(MusicPiece):#создание дочернего класса песня
+    def __init__(self, name, duration, lyrics, lyricist):#инициализация полей
+        super().__init__(name, duration)#наследование класса музыкальное произведение
+        self.lyrics = lyrics
+        self.lyricist = lyricist
+    def info(self):#метод по выводу информации
         try:
-            if months < 0:
-                raise ValueError("Количество месяцев не может быть отрицательным")
+            if self.duration <= 0:#оповещение об ошибке, если длительность <=0, ошибка значения
+                raise ValueError('длительность не может быть <= 0')
             else:
-                return self.deposit_amount * months * 1.1
+                print(f'Название: {self.name}\n'
+                      f'Длительность: {self.duration} минут\n'
+                      f'Текст: {self.lyrics}\n'
+                      f'Автор текста: {self.lyricist}')
         except ValueError as e:
-            print("Ошибка:", str(e))
-
-# Определение класса DemandDeposit (вклад до востребования), унаследованного от Deposit
-class DemandDeposit(Deposit):
-    def calculate_deposit(self, months):
+            print('Error:', str(e))
+class InstrumentalPiece(MusicPiece):#создание дочернего класса инструментальное произведение
+    def __init__(self, name, duration, instruments):#инициализация полей
+        super().__init__(name, duration)#наследование класса музыкальное произведение
+        self.instruments = instruments
+    def info(self):#метод по выводу информации
         try:
-            if months < 0:
-                raise ValueError("Количество месяцев не может быть отрицательным")
+            if self.duration <= 0:#оповещение об ошибке, если длительность <0, ошибка значения
+                raise ValueError('длительность не может быть <= 0')
             else:
-                return self.deposit_amount * months * 1.05
+                print(f'Название: {self.name}\n'
+                      f'Продолжительность: {self.duration} минут\n'
+                      f'Инструменты: {self.instruments}')
         except ValueError as e:
-            print("Ошибка:", str(e))
+            print('Error:', str(e))
 
-# Создание экземпляров объектов
-bank = Bank("БелАгроПромБанк")
-filial = Filial("Филиал 1", 9999999)
-deposit = Deposit("Тополь Алексей Витальевич", 50000)
-long_term_deposit = LongTermDeposit("Берёза Елизавета Сергеевна", 100000)
-demand_deposit = DemandDeposit("Ель Александр Иванович", 200000)
-
-# Вывод информации об объектах
-print("Название банка:", bank.get_name())
-print("Общая сумма вкладов в филиале:", filial.get_total_deposits())
-print("Сумма вклада Тополя Алексея Витальевича:", deposit.get_deposit_amount())
-print("Сумма вклада Тополя Алексея Витальевича через 10 месяцев:", deposit.calculate_deposit(10))
-print("Сумма долгосрочного вклада Берёзы Елизаветы Сергеевны через 10 месяцев:", long_term_deposit.calculate_deposit(10))
-print("Сумма вклада до востребования Ель Александра Ивановича через -1 день:", demand_deposit.calculate_deposit(-1))
+# Создание коллекции
+collection = Collection('Ляпота(нету)', 'Wolfgang Amadeus Mozart')
+# Создание альбома
+album = MusicAlbum('Mozart: Requiem', 'опера', 1792, 60)
+# Создание песни и проверка на наличие ошибки
+song = Song('DU HAST', -3.55, 'Du, du hast, du hast', 'Rammstein')
+# Создание инструментального произведения
+instrumental = InstrumentalPiece('Русский сувенир', 92, 'Полный оркестр')
+# Генерация описания песни и инструментального произведения
+song.info()
+instrumental.info()
