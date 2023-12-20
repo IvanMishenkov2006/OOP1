@@ -1,16 +1,17 @@
 class Vector:
-    def __init__(self,*args):
-        self.values=[]
+    def __init__(self, *args):
+        self.values = [] #Создание пустого списка для значений вектора
         for n in args:
-            if isinstance(n,int):
-                self.values.append(n)
+            if isinstance(n, int):#Проверка, что аргумент является целым числом
+                self.values.append(n)#Добавление целого числа в список значений
 
     def __str__(self):
-        if self.values:
-            return f'вектор{tuple(sorted(self.values))}'
+        if self.values:#Проверка, что список значений не пуст
+            return f'вектор{tuple(sorted(self.values))}'#Возврат строки с отсортированным кортежем значений
         else:
-            return f'ПУСРОЙ ВЕКТОР'
-v1=Vector(1,2,3)
-print(v1)#печатает "вектор(1,2,3)"
-v2=Vector()
-print(v2)#печатает "ПУСРОЙ ВЕКТОР"
+            return f'ПУСТОЙ ВЕКТОР'#Возврат строки обозначающей пустой вектор
+
+v1 = Vector(1,2,3)#Создание вектора с тремя значениями
+print(v1)#Печатает вектор(1,2,3)
+v2 = Vector()#Создание пустого вектора
+print(v2)#Печатает ПУСТОЙ ВЕКТОР
